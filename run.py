@@ -67,11 +67,12 @@ if args.cuda:
 
 
 def test(args, data):
-    logger.info('Initialize the model...')
-    model = Model(args, args.input_feature_size, args.hidden_feature_size, args.out_feature_size)
+    logger.info('Starting to test...')
+    # model = Model(args, args.input_feature_size, args.hidden_feature_size, args.out_feature_size)
     
     logger.info('Reloading the model...')
-    model.load_model(model_dir=args.model_dir)
+    # model.load_model(model_dir=args.model_dir)
+    model = torch.load('output/DGCM')
     model.test(data)
     logger.info('Done with model testing!')
 
@@ -89,11 +90,15 @@ def run():
   train_data, val_data, test_data = ClickDataset(args, data_path=args.train_data_path), ClickDataset(args, data_path=args.valid_data_path), ClickDataset(args, data_path=args.test_data_path)
   # dataset = ClickDataset(args, data_path=args.data_path)
   # train_data, val_data, test_data = dataset[:len(dataset)*0.8], dataset[len(dataset)*0.8:len(dataset)*0.9], dataset[len(dataset)*0.9:]
-
+  writer = SummaryWriter(log_dir="output/writer/")
+  writer.add_scalar(tag='loss/lr', scalar_value=args.lr, global_step=0)
+  
   if args.train:
-      train(args, train_data)
+      for epoch in range(args.epochs):
+        train(args, epoch, train_data)
   if args.test:
       test(args, test_data)
+  writer.close()
 
   # optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
   # learning_rate = args.lr
