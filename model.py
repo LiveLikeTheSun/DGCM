@@ -11,7 +11,7 @@ import torch.optim as optim
 import math
 from torch.utils.data import TensorDataset, DataLoader
 # from model1 import *
-from model44 import *
+from DGCM import *
 from sklearn.preprocessing import MinMaxScaler
 import random
 import os
@@ -111,10 +111,10 @@ def adjust_learning_rate(optimizer, decay_rate=0.5):
     for param_group in optimizer.param_groups:
         param_group['lr'] = param_group['lr'] * decay_rate
 
-def train(epoch):
+def train(epoch, data):
     model.train()
     criterion = torch.nn.BCELoss()
-    train_loader = DataLoader(idx_train, batch_size=args.batch_size, shuffle=True, drop_last=True)
+    train_loader = DataLoader(data, batch_size=args.batch_size, shuffle=True, drop_last=True)
     global learning_rate
     global patience
 
@@ -202,7 +202,7 @@ def train(epoch):
             tmp_test_loss, tmp_loglikelihood, tmp_perplexity = test()
             if tmp_loglikelihood > max(all_loglikelihood) or tmp_perplexity < min(all_perplexity):
                 patience = 0
-                torch.save(model, 'GNNModel/202302/44_emb_id_title')
+                torch.save(model, 'output/DGCM')
                 if round(tmp_loglikelihood.item(), 4) not in all_loglikelihood:
                     all_loglikelihood.append(round(tmp_loglikelihood.item(), 4))
                 if round(tmp_perplexity.item(), 4) not in all_perplexity:
@@ -222,7 +222,7 @@ def train(epoch):
                           global_step=epoch * 14475 + step)
 
 # 定义测试的一个函数
-def test():
+def test(idx_test):
     # model = torch.load('model/202302/44_emb_id_title')
     model.eval()
     criterion = torch.nn.BCELoss().cuda()
@@ -306,14 +306,14 @@ def test():
     # rank(clicks, probablity, true_relevance)
     return loss.item() / 10, loglikelihood, perplexity
 
-t_total = time.time()
-writer = SummaryWriter(log_dir="results1/202302/")
-writer.add_scalar(tag='loss/lr', scalar_value=learning_rate, global_step=0)
-# 定义了训练多少回合
-for epoch in range(args.epochs): # args.epochs
-    # test()
-    train(epoch)
-writer.close()
-print("Optimization Finished!")
-print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
+# t_total = time.time()
+# writer = SummaryWriter(log_dir="output/writer/")
+# writer.add_scalar(tag='loss/lr', scalar_value=learning_rate, global_step=0)
+# # 定义了训练多少回合
+# for epoch in range(args.epochs): # args.epochs
+#     # test()
+#     train(epoch)
+# writer.close()
+# print("Optimization Finished!")
+# print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
