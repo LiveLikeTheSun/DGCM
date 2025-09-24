@@ -11,7 +11,8 @@ import torch.optim as optim
 import math
 from torch.utils.data import TensorDataset, DataLoader
 # from model1 import *
-from model44 import *
+from DGCM import *
+from dataset import *
 from sklearn.preprocessing import MinMaxScaler
 import random
 import os
@@ -26,6 +27,13 @@ parser.add_argument('--train', action='store_true',
                         help='train the model')
 parser.add_argument('--test', action='store_true',
                         help='test on test set')
+
+parser.add_argument('--train_data_path', default='data/train',
+                                help='the dir to store training dataset')
+parser.add_argument('--valid_data_path', default='data/valid',
+                                help='the dir to store validation dataset')
+parser.add_argument('--test_data_path', default='data/test',
+                                help='the dir to store testing dataset')
 
 parser.add_argument('--input_feature_size', type=int, default=216, help='input node embedding size.')
 parser.add_argument('--hidden_feature_size', type=int, default=150, help='hidden state size.')
@@ -69,9 +77,6 @@ def test(args, data):
 
 def train(args, data):
     logger = logging.getLogger("DGCM")
-    logger.info('Checking the data files...')
-    if not args.train_file:
-        assert 'train data file does not exist.'
     
     logger.info('Initialize the model...')
     model = Model(args, args.input_feature_size, args.hidden_feature_size, args.out_feature_size)
@@ -81,8 +86,9 @@ def train(args, data):
     logger.info('Done with model training!')
 
 def run():
-  dataset = ClickDataset(args, data_path=args.data_path)
-  train_data, val_data, test_data = dataset[:len(dataset)*0.8], dataset[len(dataset)*0.8:len(dataset)*0.9], dataset[len(dataset)*0.9:]
+  train_data, val_data, test_data = ClickDataset(args, data_path=args.train_data_path), ClickDataset(args, data_path=args.valid_data_path), ClickDataset(args, data_path=args.test_data_path)
+  # dataset = ClickDataset(args, data_path=args.data_path)
+  # train_data, val_data, test_data = dataset[:len(dataset)*0.8], dataset[len(dataset)*0.8:len(dataset)*0.9], dataset[len(dataset)*0.9:]
 
   if args.train:
       train(args, train_data)
