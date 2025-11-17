@@ -13,8 +13,10 @@
 # Before training model
 ## 1. data preparation
    The folder 'data' contains dataset during the training, validation and testing of the model.
+   The input format and data are as shown in the da ta folder, and the data processing code will parse them into the format required for subsequent training and testing.
+   The output is the evaluation index.
 ## 2. file preparation saved in the folder 'pretrained files'
-   ### (1) pretrained embedding：img_feature.npy and query_snippet2feature.npy mean the embedding obtained by pretrained model such as ResNet and BERT.
+   ### (1) pretrained embedding：img_feature_160.npy and query_snippet2feature.npy mean the embedding obtained by pretrained model such as ResNet and BERT. And before training, you need unzip the "img_feature_160.npy.zip" first.
    ### (2) graph-related files
        #### all_sess_adj.npy represents the adjacency matrix corresponding to the session
        #### all_sess_show_idx.npy indicates the order of the documents corresponding to the session, as the order of the documents returned by the same query may be different
