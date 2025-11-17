@@ -369,7 +369,7 @@ class Model(object):
         loglikelihood, perplexity = self.evaluation(len(idx_test), true_clicks, probablity)
         query_output = self.get_query_output(len(idx_test), hidden)
         # print(np.array(query_output).shape)
-        np.save('data/query_output', query_output)
+        np.save('pretrained_files/query_output', query_output)
         # rank(clicks, probablity, true_relevance)
         return loss.item() / (int(len(idx_test)/self.args.test_batch_size)*10), loglikelihood, perplexity
         
