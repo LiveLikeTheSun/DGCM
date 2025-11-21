@@ -13,12 +13,12 @@
 
 # Before training model
 ## 1. data preparation
-   The folder 'data' contains dataset during the training, validation and testing of the model.  
+   The folder **`data`** contains dataset during the training, validation and testing of the model.  
    The input format and data are as shown in the data folder, and the data processing code will parse them into the format required for subsequent training and testing.  
    The output is the evaluation matrix.
 ## 2. file preparation saved in the folder 'pretrained files'
    ### (1) pretrained embedding：img_feature_160.npy and query_snippet2feature.npy store features extracted by pretrained models: image features are obtained using ResNet, and snippet text features are obtained using BERT.   
-   Before training, you need unzip the "img_feature_160.npy.zip" first.
+   Before training, you need unzip the **`img_feature_160.npy.zip`** first.
    ### (2) graph-related files
        #### all_sess_adj.npy represents the adjacency matrix corresponding to the session
        #### all_sess_show_idx.npy indicates the order of the documents corresponding to the session, as the order of the documents returned by the same query may be different
@@ -36,7 +36,7 @@ python run.py --train
 python run.py --test
 ```
 
-After testing, the embedding of every document is stored in 'pretrained_files/query_output.npy' and we utilize learning to rank (LTR) algorithm to output the relevance score based on the representation learned by DGCM.
+After testing, the embedding of every document is stored in **`pretrained_files/query_output.npy`** and we utilize learning to rank (LTR) algorithm to output the relevance score based on the representation learned by DGCM.
 ```text
 java -jar RankLib-2.18.jar -train rank/ltr_train -test rank/ltr_test -ranker 6 -metric2t NDCG@k
 ```
