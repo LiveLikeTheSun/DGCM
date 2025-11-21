@@ -42,7 +42,9 @@ java -jar RankLib-2.18.jar -train rank/ltr_train -test rank/ltr_test -ranker 6 -
 ```
 k = 1,3,5
 
-About the explanation of this command, we have placed a **`readme.txt`**  file under the **`rank/`** folder
+About the explanation of this command, we have placed a **`readme.txt`**  file under the **`rank/`** folder.
+
+**`ltr_test`** is parsed using the file **`pretrained_files/query_output.npy`**, following the input requirements of RankLib-2.18.jar.”
 
 
 
