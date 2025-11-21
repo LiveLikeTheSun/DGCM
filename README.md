@@ -35,11 +35,11 @@ python run.py --train
 ```text
 python run.py --test
 ```
-<!-- 
+
 After testing, the embedding of every document is stored in 'pretrained_files/query_output.npy' and we utilize learning to rank (LTR) algorithm to output the relevance score based on the representation learned by DGCM.
 ```text
-java -jar RankLib-2.18.jar -train pretrained_files/query_output.npy -test pretrained_files/query_output.npy -ranker 6 -metric2t NDCG@k
+java -jar RankLib-2.18.jar -train rank/ltr_train -test rank/ltr_test -ranker 6 -metric2t NDCG@k
 ```
 k = 1,3,5
--->
+
 
