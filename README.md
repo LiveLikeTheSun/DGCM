@@ -17,7 +17,8 @@
    The input format and data are as shown in the data folder, and the data processing code will parse them into the format required for subsequent training and testing.  
    The output is the evaluation matrix.
 ## 2. file preparation saved in the folder 'pretrained files'
-   ### (1) pretrained embedding：img_feature_160.npy and query_snippet2feature.npy store features extracted by pretrained models: image features are obtained using ResNet, and snippet text features are obtained using BERT.   
+   ### (1) pretrained embedding
+   img_feature_160.npy and query_snippet2feature.npy store features extracted by pretrained models: image features are obtained using ResNet, and snippet text features are obtained using BERT.   
    Before training, you need unzip the **`img_feature_160.npy.zip`** first.
    ### (2) graph-related files
        #### all_sess_adj.npy represents the adjacency matrix corresponding to the session
